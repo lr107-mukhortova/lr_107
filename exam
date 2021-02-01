@@ -1,0 +1,56 @@
+import os
+
+reposName = 'C:\Users\admin\PycharmProjects\exam\mukha'
+unviewedFileName = 'C:\Users\admin\PycharmProjects\exam\un.txt'
+editedFileName = 'C:\Users\admin\PycharmProjects\exam\ed.txt'
+
+editedFiles = []
+unviewedFiles = []
+
+curDir = os.getcwd()
+
+
+def get_unview_files():
+    mass = []
+    f = open('.'+os.path.expanduser(unviewedFileName), 'r')
+    for line in f:
+        mass.append(line.split(' ')[1].replace('\n', ''))
+    os.chdir(curDir)
+    return mass
+
+
+def get_edit_files():
+    mass = []
+    os.chdir(os.getcwd() + '/' + reposName)
+    f = open(os.path.expanduser(editedFileName), 'r')
+    for line in f:
+        mass.append(line.split(' ')[1].replace('\n', ''))
+    os.chdir(curDir)
+    return mass
+
+
+# beginning of work
+while True:
+    enterCommand = input().split(' ')
+    if enterCommand[0] != 'git':
+        print('No such command exists')
+    else:
+        if enterCommand[1] == 'cd':  # cd command
+                path = enterCommand[2]
+                if path:
+                    print(path)
+                    os.chdir(enterCommand[2])
+                else:
+                    print('Empty path')
+        else:
+            print('Cant find directory. Enter absolute path')
+
+        # if enterCommand[1] == listOfCommands[]: # add command
+
+        if enterCommand[1] == 'status':  # status command
+            unviewedFiles = get_unview_files()
+            editedFiles = get_edit_files()
+            print('unviewed files:')
+            print(unviewedFiles)
+            print('edited files:')
+            print(editedFiles)
